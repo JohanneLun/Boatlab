@@ -10,87 +10,50 @@ T_sqr = (A2^2*om2^2 - A1^2*om1^2) / (A1^2*om1^4 - A2^2*om2^4);
 T = sqrt(T_sqr);
 K = A1*om1*sqrt(T^2*om1^2 + 1);
 
-% Part 2
-%w_0 was identifyd by the plot 
-w_0 = 0.7823; 
-
-%Calculating sigma, sigma^2 was the peak value og the plot
-sigma= sqrt(0.001484); 
-
-%Finding lamda 
+%Part 2
+w_0 = 0.7823;
 lambda = 0.07;
+sigma = sqrt(0.001484);
 K_w = 2*lambda*w_0*sigma;
-
 
 %Part 3
 K_pd = 0.8363;
 T_f = 8.3909;
 T_d = T; 
 %K = 0.1561 calculated in part 1
-x= K_pd*K*T_d;
+x = K_pd*K*T_d;
 y = K*K_pd;
-z= T*T_f; 
-i= T_f+T; 
-H_0= tf([x y],[z i 1 0]);
-
-
+z = T*T_f; 
+i = T_f+T; 
+H_0 = tf([x y],[z i 1 0]);
 
 %Part 4
-A=[0 1 0 0 0; 
- -w_0^2 -2*lambda*w_0 0 0 0 ;
-0 0 0 1 0;
-0 0 0 -1/T -K/T;
-0 0 0 0 0;]; 
-B= [0 0 0 K/T 0]'; 
-E= [0 0; 
-    K_w 0;
-    0 0; 
-    0 0;
-    0 1;]; 
-C= [ 0 1 1 0 0]; 
-
-% No distubance 
-A_b=[0 1; 
-    0 -1/T]; 
-B_b= [0 K/T ]'; 
-C_b= [ 1 0 ]; 
-obs_b= obsv(A_b, C_b); 
-rank(obs_b);
-
-%With current 
-A_c =[ 0 1 0; 
-    0 -1/T -K/T; 
-    0 0 0;]; 
-B_c =[0 K/T 0]';
-E_c =[ 0 0; 
-    0 0; 
-    0 1;]; 
-C_c =[1 0 0];  
-obs_c= obsv(A_c, C_c);
-rank(obs_c); 
-
-%With wave disturbance
-A_d = [0 1 0 0; 
-    -w_0^2 -2*lambda*w_0 0 0 ;
-    0 0 0 1; 
-    0 0 0 -1/T;]; 
-c_d= [0 1 1 0]; 
-obs_d = obsv(A_d, c_d);
-rank(obs_d);
-
-%With current and wave disturbance 
-obs_d= obsv(A,C);
-rank(obs_d);
-
+A = [0 1 0 0 0; -w_0^2 -2*lambda*w_0 0 0 0 ; 0 0 0 1 0;
+0 0 0 -1/T -K/T; 0 0 0 0 0;]; 
+B = [0 0 0 K/T 0]'; 
+E = [0 0; K_w 0; 0 0; 0 0; 0 1;]; 
+C = [ 0 1 1 0 0]; 
 
 %Part 5 
-Fs= 10; %Hz
-Ts= 1/Fs;
-D=1;
-%5a, disctritisation ????
+Fs = 10; %Hz
+Ts = 1/Fs;
+
+% a) discretization
 [Ad, Bd] = c2d(A,B,Ts); 
 [Ad, Ed] = c2d(A,E,Ts); 
 
-load ('data.mat'); 
-compass_data = data(2,:); %compass(deg)
-mes_var = var(compass_data); % Messerment noice in deg  
+% b) variance of measurement noise
+load ('dataPD.mat'); 
+compass_data = dataPD(2,:); %compass(deg)
+mes_var = var(compass_data*pi/180); % Measurment noice in radians
+
+% c) 
+H = 1;
+R = mes_var/Ts;
+P0_pri = [1 0 0 0 0; 0 0.013 0 0 0; 0 0 pi^2 0 0;
+    0 0 0 1 0; 0 0 0 0 2.5e-3];
+x0_pri = [0 0 0 0 0]';
+Q = [30 0; 0 1e-6];
+y_pri = C*x0_pri;
+I = eye(5);
+ks = struct('Ad',Ad,'Bd',Bd,'C',C,'Ed',Ed,'H',H,'R',R,'Q',Q,'I',I,'P0_pri',P0_pri,'x0_pri',x0_pri,'y_pri',y_pri);
