@@ -43,17 +43,15 @@ Ts = 1/Fs;
 [Ad, Ed] = c2d(A,E,Ts); 
 
 % b) variance of measurement noise
-load ('dataPD.mat'); 
-compass_data = dataPD(2,:); %compass(deg)
-mes_var = var(compass_data*pi/180); % Measurment noice in radians
-
+    %load ('data.mat'); 
+    %compass_data = data(2,:); %compass(deg)
+    %mes_var = var(compass_data*pi/180); % Measurment noice in radians
+mes_var = 6.0813e-07;
 % c) 
-H = 1;
 R = mes_var/Ts;
 P0_pri = [1 0 0 0 0; 0 0.013 0 0 0; 0 0 pi^2 0 0;
     0 0 0 1 0; 0 0 0 0 2.5e-3];
 x0_pri = [0 0 0 0 0]';
 Q = [30 0; 0 1e-6];
-y_pri = C*x0_pri;
 I = eye(5);
-ks = struct('Ad',Ad,'Bd',Bd,'C',C,'Ed',Ed,'H',H,'R',R,'Q',Q,'I',I,'P0_pri',P0_pri,'x0_pri',x0_pri,'y_pri',y_pri);
+ks = struct('Ad',Ad,'Bd',Bd,'C',C,'Ed',Ed,'R',R,'Q',Q,'I',I,'P0_pri',P0_pri,'x0_pri',x0_pri);

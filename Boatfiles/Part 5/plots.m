@@ -9,10 +9,11 @@ legend('without Kalman','with Kalman');
 figure('Name','5 d)');
 load('dataPD.mat');
 plot(dataPD(1,:),dataPD(5,:),dataPD(1,:),dataPD(2,:),dataPD(1,:),dataPD(7,:));
-legend('rudder input','y measured','bias');
+legend('rudder input','y measured','estimated bias');
 
 figure('Name','5 e)');
-plot(dataPD(1,:),dataPD(5,:),dataPD(1,:),dataPD(7,:));
+load('dataPDe.mat')
+plot(dataPDe(1,:),dataPDe(5,:),dataPDe(1,:),dataPDe(7,:));
 hold on;
-plot(dataPD(1,:),dataPD(2,:),dataPD(1,:),dataPD(6,:));
-legend('rudder input','bias',' y measured','y estimated');
+plot(dataPDe(1,:),dataPDe(2,:),dataPDe(1,:),dataPDe(6,:));
+legend('rudder input','estimated bias',' y measured','y estimated');
