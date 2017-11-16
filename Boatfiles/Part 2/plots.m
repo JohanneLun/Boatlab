@@ -1,4 +1,4 @@
 clc;
 figure
-load('part1.mat');
-plot(part1(1,:),part1(2,:));
+load('part2.mat');
+plot(part2(1,:),part1(2,:));

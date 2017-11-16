@@ -21,8 +21,7 @@ omega= 2*pi*f; %rad/s]
 pxx= pxx./(2*pi); %[s/rad]
 
 figure
-plot(omega, pxx);
-hold on;
+plot(omega, pxx); hold on;
 %w_0 was identifyd by the plot 
 w_0 = 0.7823; 
 
@@ -30,9 +29,10 @@ w_0 = 0.7823;
 sigma= sqrt(0.001484); 
 
 %Finding lamda 
-lambda = 0.07;
+lambda = 0.06;
 Kw = 2*lambda*w_0*sigma;
 
 ss = (Kw^2*omega.^2)./(omega.^4+w_0^4 +2*omega.^2*w_0^2*(-1+2*lambda^2));
 plot(omega,ss);
-legend('pxx','P with chosen lambda');
+xlabel('Frequency [Hz]'); ylabel('Power density [J/rad]');
+title('Estimated with fitted PSD'); legend('pxx','P with chosen lambda');
