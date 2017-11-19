@@ -30,12 +30,12 @@ lambda = 0.07;
 K_w = 2*lambda*w_0*sigma;
 
 %Part 3
-K_pd = 0.8363;
+K_pd = 0.8633;
 T_f = 8.3909;
 T_d = T; 
-%K = 0.1561 calculated in part 1
-x= K_pd*K*T_d;
-y = K*K_pd;
-z= T*T_f; 
-i= T_f+T; 
-H_0= tf([x y],[z i 1 0]);
+
+%Bode 
+s = tf('s') ;
+H = K_pd*K/ (T_f* s ^2 + s ) ;
+%bode (H) ;
+%grid on: 

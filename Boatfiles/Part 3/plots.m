@@ -11,6 +11,6 @@ plot(data(1,:),data(2,:),'b'); hold on;
 plot(data(1,:),data(5,:));
 xlabel('Time (s)'); ylabel('Degrees');
 legend('Reference','Compass course','Rudder input')
-title('With wave disturbance');
+title('With current disturbance');
 %figure('Name','Bode')
 %bode(H_0); grid on; 

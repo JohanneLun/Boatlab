@@ -29,7 +29,7 @@ w_0 = 0.7823;
 sigma= sqrt(0.001484); 
 
 %Finding lamda 
-lambda = 0.06;
+lambda = 0.08;
 Kw = 2*lambda*w_0*sigma;
 
 ss = (Kw^2*omega.^2)./(omega.^4+w_0^4 +2*omega.^2*w_0^2*(-1+2*lambda^2));
