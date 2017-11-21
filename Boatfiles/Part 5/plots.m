@@ -28,3 +28,12 @@ legend('rudder input','estimated bias',...
 title('with wave disturbance');
 xlabel('Time (s)'); ylabel('Degrees');
 grid on; 
+
+%% Plott for 5e 
+figure('Name','5 e');
+load('data.mat');
+plot(data(1,:),data(2,:),data(1,:),data(8,:));
+legend('Wave','estimated wave');
+title('Wave comparison');
+xlabel('Time (s)'); ylabel('Degrees');
+grid on; 
